@@ -19,6 +19,11 @@ class View {
         return self::$instance->config['base_url'].$path;
     }
 
+    public static function redirect($url) {
+        header('Refresh:0;url='.self::base_url($url));
+        exit();
+    }
+
     public static function getInstance(): View {
         if (!isset(self::$instance)) {
             self::$instance = new self();

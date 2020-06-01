@@ -1,5 +1,6 @@
 <?php
 use Metrotel\View;
+use Guard\Authorization;
 ?>
 
 <!DOCTYPE html>
@@ -25,9 +26,13 @@ use Metrotel\View;
                             <li><a href="javascript:void(0);" class="navbar-brand">Телефонная книга</a></li>
                         </ul>
                         <div class="ml-auto justify-content-end">
-                            <span class="text-white d-none fullname"></span>
-                            &nbsp;&nbsp;&nbsp;
-                            <button class="btn btn-light d-none btn-action exit" data-method="exit">Выйти</button>
+                            <?php if (Authorization::isAuth()) { ?>
+                                <span class="text-white fullname"><?php echo Authorization::getFullname();?></span>
+                                &nbsp;&nbsp;&nbsp;
+                                <a class="btn btn-outline-primary" href="<?php echo View::base_url('login/logout');?>">Выйти</a>
+                            <?php } else { ?>
+                                <a class="btn btn-outline-primary" href="<?php echo View::base_url('login/registration');?>">Регистрация</a>
+                            <?php } ?>
                         </div>
                     </div>
                 </div>
@@ -44,51 +49,15 @@ use Metrotel\View;
             </div>
         </div>
 
-        <div class="container-fluid">
-
-            <div class="row justify-content-md-center pageLogin">
-                <div class="col-md-auto">
-                    <form id="auth-form">
-
-                        <h5>Авторизация</h5>
-
-                        <div class="form-group">
-                            <input type="text" class="form-control username" name="username" placeholder="Логин">
-                        </div>
-                        <div class="form-group">
-                            <input type="password" class="form-control password" name="password" placeholder="Пароль">
-                        </div>
-                        <div class="d-flex justify-content-center">
-                            <button type="button" class="btn btn-primary btn-action" data-method="login">Авторизация</button>
-                        </div>
-                    </form>
+        <div class="container-fluid mt-5">
+            <?php if (!empty($error)) { ?>
+                <div class="alert alert-dismissable alert-danger">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                    <?php echo $error;?>
                 </div>
-            </div>
+            <?php } ?>
 
-            <div class="row d-none pageMain">
-                <div class="col-12 col-md-2 py-3 menu">
-                    <ul>
-                        <li>
-                            Телефонная книга
-                        </li>
-                        <li>
-                            Регистрация
-                        </li>
-                    </ul>
-
-                    <a class="to_header" href="javascript:void(0);">
-                        <div id="to_header">
-                            <i class="fa fa-arrow-up" aria-hidden="true"></i>
-                        </div>
-                    </a>
-                </div>
-
-
-                <div class="col-12 col-md-10 py-3">
-                    <div class="d-none justify-content-center pageResponse"></div>
-                    <div class="content"></div>
-                </div>
-            </div>
+            <?php echo (!empty($content)) ? $content : '';?>
         </div>
     </body>
 

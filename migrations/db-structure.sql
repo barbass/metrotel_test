@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: 127.0.0.1
--- Время создания: Июн 01 2020 г., 06:41
+-- Время создания: Июн 01 2020 г., 17:04
 -- Версия сервера: 10.1.34-MariaDB
 -- Версия PHP: 7.2.7
 
@@ -35,6 +35,7 @@ CREATE TABLE `user` (
   `name` varchar(50) NOT NULL,
   `lastname` varchar(50) NOT NULL,
   `login` varchar(50) NOT NULL,
+  `email` varchar(50) NOT NULL,
   `password` varchar(250) NOT NULL,
   `confirm_token` text COMMENT 'JSON-данные',
   `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -48,7 +49,7 @@ CREATE TABLE `user` (
 --
 
 CREATE TABLE `user_phone` (
-  `user_book_id` bigint(20) UNSIGNED NOT NULL,
+  `id` bigint(20) UNSIGNED NOT NULL,
   `user_id` bigint(20) UNSIGNED NOT NULL,
   `name` varchar(50) DEFAULT NULL,
   `lastname` varchar(50) DEFAULT NULL,
@@ -68,13 +69,14 @@ CREATE TABLE `user_phone` (
 --
 ALTER TABLE `user`
   ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `login` (`login`);
+  ADD UNIQUE KEY `login` (`login`),
+  ADD UNIQUE KEY `email` (`email`);
 
 --
 -- Индексы таблицы `user_phone`
 --
 ALTER TABLE `user_phone`
-  ADD PRIMARY KEY (`user_book_id`),
+  ADD PRIMARY KEY (`id`),
   ADD KEY `user_id` (`user_id`),
   ADD KEY `phone` (`phone`);
 
@@ -92,7 +94,7 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT для таблицы `user_phone`
 --
 ALTER TABLE `user_phone`
-  MODIFY `user_book_id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- Ограничения внешнего ключа сохраненных таблиц

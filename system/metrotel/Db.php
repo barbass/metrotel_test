@@ -81,7 +81,7 @@ class Db {
 				throw new \PDOException($error[2]);
 			}
 
-			$result = $this->smtp->fetchAll(PDO::FETCH_ASSOC);
+			$result = $this->smtp->fetchAll(\PDO::FETCH_ASSOC);
 			$this->result_query = $result;
 
 			$this->connection->commit();
@@ -107,7 +107,7 @@ class Db {
 				throw new \PDOException($error[2]);
 			}
 
-			$result = $this->smtp->fetchAll(PDO::FETCH_ASSOC);
+			$result = $this->smtp->fetchAll(\PDO::FETCH_ASSOC);
 		} else {
 			$result = $this->connection->query($sql);
 
