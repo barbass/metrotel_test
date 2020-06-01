@@ -1,10 +1,13 @@
 <?php
 
-namespace src\Controller;
+namespace Controller;
 
-class DefaultController {
+use Metrotel\View;
+use Metrotel\Src\AbstractController;
+
+class DefaultController extends AbstractController {
 	
 	public function index() {
-		echo 'Hello world!';
+		echo View::render('template');
 	}
 }

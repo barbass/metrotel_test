@@ -25,6 +25,7 @@ function splAutoLoadRegister() {
 		if ($classname[0] !== '/') {
 			$classfile = $path . '/' . $class_path . '/' . $class_name . '.php';
 		}
+
 		require_once($classfile);
 	});
 }

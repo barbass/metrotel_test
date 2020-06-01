@@ -3,8 +3,13 @@
 namespace Metrotel;
 
 class Db {
+    /**
+     *
+     * @var Metrotel\Db
+     */
+    protected static $instance;
 	protected $connection = null;
-	protected $options = array(
+	protected $config = array(
 		'host' => 'localhost',
 		'database' => '',
 		'user' => '',
@@ -18,9 +23,28 @@ class Db {
 	 * Конструктор
 	 * @param array
 	 */
-	public function __construct(string $host, string $database, string $username, string $password) {
-		$this->connect($host, $database, $username, $password);
+	public function __construct() {
+		require_once(CONFIGPATH.'/db.php');
+		$this->config = (!empty($config['db'])) ? $config['db'] : [];
+
+		$this->connect($this->config['host'], $this->config['database'], $this->config['username'], $this->config['password']);
 	}
+
+    // Singletone
+    protected function __clone() {
+        // pass
+    }
+
+    // Singletone
+    protected function __wakeup() {}
+
+    public static function getInstance(): Db {
+        if (!isset(self::$instance)) {
+            self::$instance = new self();
+       }
+
+        return self::$instance;
+    }
 
 	/**
 	 * Создание соединения с базой
@@ -39,7 +63,6 @@ class Db {
 			$this->smtp = $this->connection->prepare($sql);
 		} catch(\PDOException $e) {
 			throw $e;
-			return false;
 		}
 	}
 
@@ -67,47 +90,6 @@ class Db {
 		} catch(\PDOException $e) {
 			$this->connection->rollback();
 			throw $e;
-			return false;
-		}
-	}
-
-	/**
-	 * Мульти-вставка
-	 * @param string $table Таблица
-	 * @param array $data_list Список данных с ключами
-	 * @param int $limit Кол-во данных для вставки
-	 */
-	public function multiInsert($table, $data_list, $limit = 150) {
-		$collection = array();
-		foreach($data_list as $i=>$d) {
-			$collection[] = $d;
-
-			if (($i == count($data_list) - 1) || count($collection) == $limit) {
-				$sql_data = array();
-				$sql_insert_list = array();
-
-				foreach($collection as $j=>$model) {
-					$keys = array();
-
-					foreach($model as $key=>$value) {
-						$sql_data[$key.$j] = $value;
-						$keys[] = $key.$j;
-					}
-
-					$sql_insert_list[] = "(".implode(',', $keys).")";
-				}
-
-				$sql_insert = "INSERT INTO `".$table."` VALUES ".implode(', ', $sql_insert_list);
-
-				try {
-					$this->prepare($sql_insert);
-					$this->execute($sql_data);
-				} catch(\PDOException $e) {
-					throw $e;
-				}
-
-				$collection = array();
-			}
 		}
 	}
 
