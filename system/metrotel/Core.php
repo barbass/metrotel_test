@@ -13,6 +13,6 @@ class Core {
 	}
 	
 	public function run() {
-		$this->controller->run($_SERVER['REQUEST_URI']);
+		$this->controller->run();
 	}
 }

@@ -2,9 +2,9 @@
 
 namespace src\Controller;
 
-class DefaultController {
+class LoginController {
 	
 	public function index() {
-		echo 'Hello world!';
+		echo 'Hello login!';
 	}
 }
