@@ -119,7 +119,11 @@ use Metrotel\View;
                 <tr data-id="<?php echo $phone['id'];?>">
                     <td class="name"><?php echo $phone['name'];?></td>
                     <td class="lastname"><?php echo $phone['lastname'];?></td>
-                    <td class="phone"><?php echo $phone['phone'];?></td>
+                    <td>
+                        <span class="phone"><?php echo $phone['phone'];?></span>
+                        <br>
+                        <span class="font-italic"><?php echo View::number_to_text($phone['phone']);?></span>
+                    </td>
                     <td class="email"><?php echo $phone['email'];?></td>
                     <td class="image">
                         <?php if (!empty($phone['image'])) { ?>
