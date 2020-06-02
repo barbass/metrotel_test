@@ -20,7 +20,7 @@ function splAutoLoadRegister() {
 		$class_name = array_pop($class_list);
 
 		$class_path = implode($class_list, '/');
-		$class_path = strtolower($class_path);
+		// $class_path = strtolower($class_path);
 
 		if ($classname[0] !== '/') {
 			$classfile = $path . '/' . $class_path . '/' . $class_name . '.php';

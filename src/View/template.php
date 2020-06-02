@@ -9,10 +9,10 @@ use Guard\Authorization;
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-        <script type="text/javascript" src="<?php echo View::base_url('public/js/jquery-3.5.1.min.js');?>"></script>
-        <script type="text/javascript" src="<?php echo View::base_url('public/js/fontawesome.all.min.js');?>"></script>
-        <script type="text/javascript" src="<?php echo View::base_url('public/js/bootstrap-4.5.0-dist/js/bootstrap.bundle.min.js');?>"></script>
-        <link rel="stylesheet" href="<?php echo View::base_url('public/js/bootstrap-4.5.0-dist/css/bootstrap.min.css');?>">
+        <script type="text/javascript" src="<?php echo View::base_url('js/jquery-3.5.1.min.js');?>"></script>
+        <script type="text/javascript" src="<?php echo View::base_url('js/fontawesome.all.min.js');?>"></script>
+        <script type="text/javascript" src="<?php echo View::base_url('js/bootstrap-4.5.0-dist/js/bootstrap.bundle.min.js');?>"></script>
+        <link rel="stylesheet" href="<?php echo View::base_url('js/bootstrap-4.5.0-dist/css/bootstrap.min.css');?>">
 
         <title>Телефонная книга</title>
     </head>

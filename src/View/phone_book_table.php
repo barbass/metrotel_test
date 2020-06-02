@@ -127,7 +127,7 @@ use Metrotel\View;
                     <td class="email"><?php echo $phone['email'];?></td>
                     <td class="image">
                         <?php if (!empty($phone['image'])) { ?>
-                            <img width="40" height="40" src="<?php echo View::base_url('public/image/'.$phone['image']);?>">
+                            <img width="40" height="40" src="<?php echo View::base_url('image/'.$phone['image']);?>">
                         <?php } ?>
                     </td>
                     <td><?php echo $phone['created_at'];?></td>
