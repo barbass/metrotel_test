@@ -15,8 +15,14 @@ class AbstractRepository {
      */
     protected static $primary_key;
 
-    public static function find($id) {
+    public static function find($id): ?array
+    {
         Db::getInstance()->query("SELECT * FROM `".static::$table."` WHERE `".static::$primary_key."` = ?", [$id]);
         return Db::getInstance()->getRow();
+    }
+
+    public static function delete($id): void
+    {
+        Db::getInstance()->query("DELETE FROM `".static::$table."` WHERE `".static::$primary_key."` = ?", [$id]);
     }
 }

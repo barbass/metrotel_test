@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: 127.0.0.1
--- Время создания: Июн 02 2020 г., 05:15
+-- Время создания: Июн 02 2020 г., 06:21
 -- Версия сервера: 10.1.34-MariaDB
 -- Версия PHP: 7.2.7
 
@@ -44,16 +44,16 @@ CREATE TABLE `user` (
 -- --------------------------------------------------------
 
 --
--- Структура таблицы `user_phone`
+-- Структура таблицы `user_phonebook`
 --
 
-CREATE TABLE `user_phone` (
+CREATE TABLE `user_phonebook` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `user_id` bigint(20) UNSIGNED NOT NULL,
   `name` varchar(50) DEFAULT NULL,
   `lastname` varchar(50) DEFAULT NULL,
   `phone` varchar(25) NOT NULL,
-  `email` int(11) DEFAULT NULL,
+  `email` varchar(50) DEFAULT NULL,
   `image` varchar(250) DEFAULT NULL,
   `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
@@ -72,9 +72,9 @@ ALTER TABLE `user`
   ADD UNIQUE KEY `email` (`email`);
 
 --
--- Индексы таблицы `user_phone`
+-- Индексы таблицы `user_phonebook`
 --
-ALTER TABLE `user_phone`
+ALTER TABLE `user_phonebook`
   ADD PRIMARY KEY (`id`),
   ADD KEY `user_id` (`user_id`),
   ADD KEY `phone` (`phone`);
@@ -90,9 +90,9 @@ ALTER TABLE `user`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT для таблицы `user_phone`
+-- AUTO_INCREMENT для таблицы `user_phonebook`
 --
-ALTER TABLE `user_phone`
+ALTER TABLE `user_phonebook`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
@@ -100,9 +100,9 @@ ALTER TABLE `user_phone`
 --
 
 --
--- Ограничения внешнего ключа таблицы `user_phone`
+-- Ограничения внешнего ключа таблицы `user_phonebook`
 --
-ALTER TABLE `user_phone`
+ALTER TABLE `user_phonebook`
   ADD CONSTRAINT `user_fk` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
 

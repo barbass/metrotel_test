@@ -26,12 +26,14 @@ class Authorization {
     {
         $user = UserRepository::findByUsername($username);
         if (!$user) {
-            throw new \Exception('User not found!');
+            throw new \Exception('Пользователь не найден!');
         }
 
         if (!self::checkPassword($password, $user['password'])) {
-            throw new \Exception('User not found!');
+            throw new \Exception('Пользователь не найден!');
         }
+
+        // Warning: Можно добавить проверку на количество неудачных попыток
 
         @session_start();
         $_SESSION['id'] = $user['id'];
@@ -47,6 +49,11 @@ class Authorization {
     public static function getFullname(): string
     {
         return self::$user['name'].' '.self::$user['lastname'];
+    }
+
+    public static function getId(): int
+    {
+        return (int)self::$user['id'];
     }
 
     /**

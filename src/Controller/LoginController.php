@@ -22,7 +22,7 @@ class LoginController {
 		if (Authorization::isAuth()) {
             View::redirect('default/index');
         } else {
-            echo View::render('template', [
+            View::render('template', [
                 'content' => View::render('login', [], false),
                 'error' => (!empty($error)) ? $error : false,
             ]);
@@ -32,17 +32,17 @@ class LoginController {
     public function registration() {
         if (!empty($_POST)) {
             try {
-                UserValidation::validateLogin($_POST['login']);
-                UserValidation::validateName($_POST['name']);
-                UserValidation::validateLastname($_POST['lastname']);
-                UserValidation::validateEmail($_POST['email']);
-                UserValidation::validatePassword($_POST['password']);
+                UserValidation::validateLogin((!empty($_POST['login'])) ? $_POST['login'] : null);
+                UserValidation::validateName((!empty($_POST['name'])) ? $_POST['name'] : null);
+                UserValidation::validateLastname((!empty($_POST['lastname'])) ? $_POST['lastname'] : null);
+                UserValidation::validateEmail((!empty($_POST['email'])) ? $_POST['email'] : null);
+                UserValidation::validatePassword((!empty($_POST['password'])) ? $_POST['password'] : null);
 
                 if (UserRepository::findByEmail($_POST['email'])) {
-                    throw new \InvalidArgumentException('This email already exists in the database');
+                    throw new \InvalidArgumentException('Такой email уже есть в базе!');
                 }
                 if (UserRepository::findByUsername($_POST['login'])) {
-                    throw new \InvalidArgumentException('This login already exists in the database');
+                    throw new \InvalidArgumentException('Такой логин уже есть в базе!');
                 }
 
                 $password = Authorization::getPasswordHash($_POST['password']);
@@ -57,7 +57,7 @@ class LoginController {
                 $user->setLastname($_POST['lastname']);
                 $user->insert();
 
-                $success = 'You have successfully registered!';
+                $success = 'Вы успешно зарегистрированы!';
 
                 $_POST = [];
             } catch(\Exception $e) {
@@ -68,7 +68,7 @@ class LoginController {
 		if (Authorization::isAuth()) {
             View::redirect('default/index');
         } else {
-            echo View::render('template', [
+            View::render('template', [
                 'content' => View::render('registration', ['form' => $_POST], false),
                 'error' => (!empty($error)) ? $error : false,
                 'success' => (!empty($success)) ? $success : false,

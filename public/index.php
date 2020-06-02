@@ -11,6 +11,9 @@ define('SYSTEMPATH', $system_path);
 $config_path = realpath(__DIR__.'/../config');
 define('CONFIGPATH', $config_path);
 
+$public_path = realpath(__DIR__.'/');
+define('PUBLICPATH', $public_path);
+
 switch (ENVIRONMENT) {
 	case 'development':
 		error_reporting(-1);

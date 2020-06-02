@@ -29,7 +29,8 @@ use Guard\Authorization;
                             <?php if (Authorization::isAuth()) { ?>
                                 <span class="text-white fullname"><?php echo Authorization::getFullname();?></span>
                                 &nbsp;&nbsp;&nbsp;
-                                <a class="btn btn-outline-primary" href="<?php echo View::base_url('login/logout');?>">Выйти</a>
+                                <a class="btn btn-outline-primary" href="<?php echo View::base_url('default/index');?>">Создать книгу</a>
+                                <a class="btn btn-outline-secondary" href="<?php echo View::base_url('login/logout');?>">Выйти</a>
                             <?php } else { ?>
                                 <a class="btn btn-outline-primary" href="<?php echo View::base_url('login/index');?>">Войти</a>
                                 <a class="btn btn-outline-primary" href="<?php echo View::base_url('login/registration');?>">Регистрация</a>
