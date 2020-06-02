@@ -31,6 +31,7 @@ use Guard\Authorization;
                                 &nbsp;&nbsp;&nbsp;
                                 <a class="btn btn-outline-primary" href="<?php echo View::base_url('login/logout');?>">Выйти</a>
                             <?php } else { ?>
+                                <a class="btn btn-outline-primary" href="<?php echo View::base_url('login/index');?>">Войти</a>
                                 <a class="btn btn-outline-primary" href="<?php echo View::base_url('login/registration');?>">Регистрация</a>
                             <?php } ?>
                         </div>
@@ -54,6 +55,12 @@ use Guard\Authorization;
                 <div class="alert alert-dismissable alert-danger">
                     <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
                     <?php echo $error;?>
+                </div>
+            <?php } ?>
+            <?php if (!empty($success)) { ?>
+                <div class="alert alert-dismissable alert-success">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                    <?php echo $success;?>
                 </div>
             <?php } ?>
 

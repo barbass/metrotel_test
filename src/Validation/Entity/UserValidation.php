@@ -80,15 +80,15 @@ class UserValidation {
     public static function validateLastname(?string $lastname): string
     {
         if (empty($lastname)) {
-            throw new \InvalidArgumentException('The lastname can not be empty.', 205);
+            throw new \InvalidArgumentException('The lastname can not be empty.');
         }
 
         if (1 !== preg_match('/^[а-яa-z]/i', $lastname)) {
-            throw new \InvalidArgumentException('The lastname must contain only cyrillic or latin characters.', 205);
+            throw new \InvalidArgumentException('The lastname must contain only cyrillic or latin characters.');
         }
 
         if (mb_strlen($lastname) > 50) {
-            throw new \InvalidArgumentException('The lastname must contain no more than 50 characters.', 205);
+            throw new \InvalidArgumentException('The lastname must contain no more than 50 characters.');
         }
 
         return $lastname;

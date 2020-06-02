@@ -21,7 +21,7 @@ use Metrotel\View;
                 <input type="email" class="form-control" value="<?php if (!empty($form['name'])) echo $form['email'];?>"maxlength="50" name="email" placeholder="Email">
             </div>
             <div class="form-group">
-                <input type="password" class="form-control" value="<?php if (!empty($form['name'])) echo $form['password'];?>" maxlength="50" name="password" placeholder="Пароль">
+                <input type="password" class="form-control" value="" maxlength="50" name="password" placeholder="Пароль">
             </div>
             <div class="d-flex justify-content-center">
                 <button type="submit" class="btn btn-primary btn-action" data-method="login">Регистрация</button>

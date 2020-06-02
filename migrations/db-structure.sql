@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: 127.0.0.1
--- Время создания: Июн 01 2020 г., 17:04
+-- Время создания: Июн 02 2020 г., 05:15
 -- Версия сервера: 10.1.34-MariaDB
 -- Версия PHP: 7.2.7
 
@@ -37,7 +37,6 @@ CREATE TABLE `user` (
   `login` varchar(50) NOT NULL,
   `email` varchar(50) NOT NULL,
   `password` varchar(250) NOT NULL,
-  `confirm_token` text COMMENT 'JSON-данные',
   `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;

@@ -29,8 +29,11 @@ class Authorization {
             throw new \Exception('User not found!');
         }
 
-        // TODO: Check password
+        if (!self::checkPassword($password, $user['password'])) {
+            throw new \Exception('User not found!');
+        }
 
+        @session_start();
         $_SESSION['id'] = $user['id'];
     }
 
@@ -51,7 +54,7 @@ class Authorization {
 	 * @param string Пароль
 	 * @param string Хранимый хэш пароля
 	 */
-	public function checkPassword(string $password, string $password_hash): bool
+	public static function checkPassword(string $password, string $password_hash): bool
     {
 		return password_verify($password, $password_hash);
 	}
@@ -59,7 +62,7 @@ class Authorization {
 	/**
 	 * Получение хэша пароля
 	 */
-	public function getPasswordHash(string $password): string
+	public static function getPasswordHash(string $password): string
     {
 		return password_hash($password, PASSWORD_BCRYPT, array('cost' => 14));
 	}

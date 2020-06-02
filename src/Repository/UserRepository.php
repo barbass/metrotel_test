@@ -13,4 +13,9 @@ class UserRepository extends AbstractRepository {
         Db::getInstance()->query("SELECT * FROM `".self::$table."` WHERE `login` = ?", [$username]);
         return Db::getInstance()->getRow();
     }
+
+    public static function findByEmail($email) {
+        Db::getInstance()->query("SELECT * FROM `".self::$table."` WHERE `email` = ?", [$email]);
+        return Db::getInstance()->getRow();
+    }
 }
