@@ -3,53 +3,8 @@ use Metrotel\View;
 ?>
 
 <div class="row justify-content-md-center">
-    <div class="col-md-auto">
-        <table class="table table-hover">
-            <thead>
-                <tr>
-                    <th>Имя</th>
-                    <th>Фамилия</th>
-                    <th>Телефон</th>
-                    <th>Email</th>
-                    <th>Изображение</th>
-                    <th>Дата создания</th>
-                    <th>Дата изменения</th>
-                    <th>Действие</th>
-                </tr>
-            </thead>
-
-            <tbody>
-                <?php if (!empty($phone_list)) {
-                    foreach($phone_list as $phone) {?>
-                        <tr data-id="<?php echo $phone['id'];?>">
-                            <td class="name"><?php echo $phone['name'];?></td>
-                            <td class="lastname"><?php echo $phone['lastname'];?></td>
-                            <td class="phone"><?php echo $phone['phone'];?></td>
-                            <td class="email"><?php echo $phone['email'];?></td>
-                            <td class="image">
-                                <?php if (!empty($phone['image'])) { ?>
-                                    <img width="40" height="40" src="<?php echo View::base_url('public/image/'.$phone['image']);?>">
-                                <?php } ?>
-                            </td>
-                            <td><?php echo $phone['created_at'];?></td>
-                            <td><?php echo $phone['updated_at'];?></td>
-                            <td>
-                                <button class="btn btn-warning btn-phone-edit" data-id="<?php echo $phone['id'];?>">Редактировать</button>
-                                <button class="btn btn-danger btn-phone-delete" data-id="<?php echo $phone['id'];?>">Удалить</button>
-                            </td>
-                        </tr>
-                    <?php }
-                } ?>
-            </tbody>
-
-            <tfoot>
-                <tr>
-                    <td colspan="8">
-                        <button class="btn btn-primary btn-phone-add">Добавить</button>
-                    </td>
-                </tr>
-            </tfoot>
-        </table>
+    <div class="col-md-auto block_phonebook">
+        <?php echo $table;?>
     </div>
 </div>
 
@@ -160,7 +115,7 @@ use Metrotel\View;
         }
 
         if (image) {
-             $('.modalAddPhone').find('img').attr('src', image);
+            $('.modalAddPhone').find('img').attr('src', image);
         }
 
         $('.modalAddPhone h5').text('Редактирование контакта ' + phone);
@@ -194,8 +149,8 @@ use Metrotel\View;
 		})
 			.done(function(result) {
                 if (result && result['success']) {
-                    // TODO: Перезагрузка страницы
                     $('.modalAddPhone').modal('hide');
+                    $('.phonebook .btn-filter').click();
                     alert('Запись ' + phone + ' успешно добавлена!');
                 } else {
                     alert(result['message']);
@@ -210,4 +165,43 @@ use Metrotel\View;
             });
     });
 
+    $('body').on('click', '.btn-sort, .btn-filter, .btn-filter-reset', function() {
+        let data = {
+            'order': {},
+            'filter': {}
+        };
+
+        if ($(this).hasClass('btn-filter-reset')) {
+            $('.phonebook').find('thead input').val('');
+        }
+
+        let fields = ['name', 'lastname', 'email', 'phone'];
+        for(let key in fields) {
+            let val = $('.phonebook').find('.filter_'+fields[key]).val();
+            if (val !== '') {
+                data['filter'][fields[key]] = val;
+            }
+        }
+
+        if ($(this).hasClass('btn-sort')) {
+            data['order'][$(this).data('field')] = $(this).data('sort');
+        }
+
+        $('.phonebook').find('button, a').attr('disabled', 'disabled');
+        $.ajax({
+			url: "<?php echo View::base_url('default/ajax_index');?>",
+			data: data,
+			type: 'POST',
+			dataType: 'html'
+		})
+			.done(function(html) {
+                $('.phonebook').remove();
+                $('.block_phonebook').html(html);
+			})
+			.fail(function() {
+                alert('Ошибка. Повторите запрос.');
+			}).always(function() {
+                $('.phonebook').find('button, a').removeAttr('disabled');
+            });
+    });
 </script>

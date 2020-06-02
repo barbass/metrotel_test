@@ -10,7 +10,7 @@ use Guard\Authorization;
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
         <script type="text/javascript" src="<?php echo View::base_url('public/js/jquery-3.5.1.min.js');?>"></script>
-
+        <script type="text/javascript" src="<?php echo View::base_url('public/js/fontawesome.all.min.js');?>"></script>
         <script type="text/javascript" src="<?php echo View::base_url('public/js/bootstrap-4.5.0-dist/js/bootstrap.bundle.min.js');?>"></script>
         <link rel="stylesheet" href="<?php echo View::base_url('public/js/bootstrap-4.5.0-dist/css/bootstrap.min.css');?>">
 
@@ -29,7 +29,6 @@ use Guard\Authorization;
                             <?php if (Authorization::isAuth()) { ?>
                                 <span class="text-white fullname"><?php echo Authorization::getFullname();?></span>
                                 &nbsp;&nbsp;&nbsp;
-                                <a class="btn btn-outline-primary" href="<?php echo View::base_url('default/index');?>">Создать книгу</a>
                                 <a class="btn btn-outline-secondary" href="<?php echo View::base_url('login/logout');?>">Выйти</a>
                             <?php } else { ?>
                                 <a class="btn btn-outline-primary" href="<?php echo View::base_url('login/index');?>">Войти</a>

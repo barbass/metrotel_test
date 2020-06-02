@@ -11,6 +11,18 @@ class UserPhonebookRepository extends AbstractRepository {
 
     public static function findAllByUserId($id, array $filter = [], array $order = []) {
         $sql = "SELECT * FROM `".self::$table."` WHERE `user_id` = ?";
+        $data = [(int)$id];
+
+        if ($filter) {
+            $sql .= " AND ";
+            $sql_filter = [];
+            foreach($filter as $field => $value) {
+                $sql_filter[] = " `$field` = ? ";
+                $data[] = $value;
+            }
+
+            $sql .= implode($sql_filter, " AND ");
+        }
 
         if ($order) {
             $sql .= " ORDER BY ";
@@ -22,7 +34,7 @@ class UserPhonebookRepository extends AbstractRepository {
             $sql .= implode($sql_order, ', ');
         }
 
-        Db::getInstance()->query($sql, [(int)$id]);
+        Db::getInstance()->query($sql, $data);
         return Db::getInstance()->getRows();
     }
 

@@ -19,8 +19,10 @@ class DefaultController extends AbstractController {
         }
 
         $phone_list = UserPhonebookRepository::findAllByUserId(Authorization::getId());
+
+        $table = View::render('phone_book_table', ['phone_list' => $phone_list], false);
         View::render('template', [
-            'content' => View::render('phone_book', ['phone_list' => $phone_list], false),
+            'content' => View::render('phone_book', ['table' => $table], false),
         ]);
     }
 
@@ -29,8 +31,15 @@ class DefaultController extends AbstractController {
             return;
         }
 
-        $phone_list = UserPhonebookRepository::findAllByUserId(Authorization::getId());
-        View::render('phone_book', ['phone_list' => $phone_list]);
+        $filter = (!empty($_POST['filter'])) ? $_POST['filter'] : [];
+        $order = (!empty($_POST['order'])) ? $_POST['order'] : [];
+
+        $phone_list = UserPhonebookRepository::findAllByUserId(Authorization::getId(), $filter, $order);
+        View::render('phone_book_table', [
+            'phone_list' => $phone_list,
+            'order' => $order,
+            'filter' => $filter
+        ]);
     }
 
     public function delete() {
@@ -114,6 +123,8 @@ class DefaultController extends AbstractController {
                     throw new \Exception('У вас нет прав на эту запись.');
                 }
 
+                $userPhonebookEntity->setCreatedAt($record['created_at']);
+                $userPhonebookEntity->setImage($record['image']);
                 $userPhonebookEntity->setId((int)$_POST['id']);
             }
 
