@@ -22,6 +22,16 @@ class Authorization {
        return (!empty(self::$user)) ? true : false;
     }
 
+    public static function setSession(string $key, $value) {
+        @session_start();
+        $_SESSION[$key] = $value;
+    }
+
+    public static function getSession(string $key) {
+        @session_start();
+        return (isset($_SESSION[$key])) ? $_SESSION[$key] : null;
+    }
+
     public static function login(string $username, string $password): void
     {
         $user = UserRepository::findByUsername($username);

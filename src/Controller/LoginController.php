@@ -11,19 +11,27 @@ use Entity\UserEntity;
 class LoginController {
 
 	public function index() {
-        if (!empty($_POST['username']) && !empty($_POST['password'])) {
+        if (!empty($_POST['username']) && !empty($_POST['password']) && !empty($_POST['captcha'])) {
             try {
+                $captcha = Authorization::getSession('login_captcha');
+                if ($captcha != $_POST['captcha']) {
+                    throw new \Exception('Неверная капча.');
+                }
+
                 Authorization::login($_POST['username'], $_POST['password']);
             } catch(\Exception $e) {
                 $error = $e->getMessage();
             }
         }
 
+        $rand_captha = rand(1000, 99999);
+        Authorization::setSession('login_captcha', $rand_captha);
+
 		if (Authorization::isAuth()) {
             View::redirect('default/index');
         } else {
             View::render('template', [
-                'content' => View::render('login', [], false),
+                'content' => View::render('login', ['captcha' => $rand_captha], false),
                 'error' => (!empty($error)) ? $error : false,
             ]);
         }
@@ -32,6 +40,11 @@ class LoginController {
     public function registration() {
         if (!empty($_POST)) {
             try {
+                $captcha = Authorization::getSession('login_captcha');
+                if ($captcha != $_POST['captcha']) {
+                    throw new \Exception('Неверная капча.');
+                }
+
                 UserValidation::validateLogin((!empty($_POST['login'])) ? $_POST['login'] : null);
                 UserValidation::validateName((!empty($_POST['name'])) ? $_POST['name'] : null);
                 UserValidation::validateLastname((!empty($_POST['lastname'])) ? $_POST['lastname'] : null);
@@ -65,11 +78,14 @@ class LoginController {
             }
         }
 
+        $rand_captha = rand(1000, 99999);
+        Authorization::setSession('login_captcha', $rand_captha);
+
 		if (Authorization::isAuth()) {
             View::redirect('default/index');
         } else {
             View::render('template', [
-                'content' => View::render('registration', ['form' => $_POST], false),
+                'content' => View::render('registration', ['form' => $_POST, 'captcha' => $rand_captha], false),
                 'error' => (!empty($error)) ? $error : false,
                 'success' => (!empty($success)) ? $success : false,
             ]);
