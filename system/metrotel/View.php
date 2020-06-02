@@ -86,8 +86,9 @@ class View {
                 $result_part[] = $number_100[$v1];
             }
             if ($v2) {
-                if ($v3 == 1) {
-                    $result_part[] = $number_10[$v2];
+                if ($v2 == 1) {
+                    $result_part[] = $number_10[$v3];
+                    $v3 = 0;
                 } else {
                     $result_part[] = $number_20[$v2];
                 }
@@ -97,8 +98,8 @@ class View {
             }
 
             $unit_declension = 2;
-            if ($v3 == 1) {
-                $unit_declension = 0;
+            if ($v2 == 1) {
+                $unit_declension = 2;
             } elseif($v3 >= 2 && $v3 <= 4) {
                 $unit_declension = 1;
             }
